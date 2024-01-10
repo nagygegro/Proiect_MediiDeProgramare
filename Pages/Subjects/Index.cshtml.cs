@@ -25,7 +25,9 @@ namespace Proiect.Pages.Subjects
         {
             if (_context.Subject != null)
             {
-                Subject = await _context.Subject.ToListAsync();
+                Subject = await _context.Subject
+                    .Include(g => g.Grades)
+                    .ToListAsync();
             }
         }
     }

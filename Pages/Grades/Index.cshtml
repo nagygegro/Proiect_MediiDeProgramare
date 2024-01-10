@@ -26,16 +26,18 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Grade) {
+@foreach (var item in Model.Grade.OrderBy(g => g.Student.FirstName + g.Student.LastName)) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Value)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Student.ID)
+                    <a href="/Students/Details?id=@Html.DisplayFor(modelItem => item.Student.ID)">
+                        @Html.DisplayFor(modelItem => item.Student.FirstName) @Html.DisplayFor(modelItem => item.Student.LastName)
+                    </a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Subject.ID)
+                @Html.DisplayFor(modelItem => item.Subject.Name)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |

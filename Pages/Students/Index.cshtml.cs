@@ -26,7 +26,8 @@ namespace Proiect.Pages.Students
             if (_context.Student != null)
             {
                 Student = await _context.Student
-                .Include(s => s.School).ToListAsync();
+                .Include(s => s.School)
+                .Include(s => s.Parents).ToListAsync();
             }
         }
     }

@@ -28,33 +28,49 @@
             <th>
                 @Html.DisplayNameFor(model => model.Student[0].School)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Parents)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Student) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PersonalNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.School.Name)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
+            int ParentsCount = (item.Parents?.Count ?? 0) + 1;
+
+            <tr>
+                    <td rowspan="@ParentsCount">
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td rowspan="@ParentsCount">
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td rowspan="@ParentsCount">
+                        @Html.DisplayFor(modelItem => item.Age)
+                    </td>
+                    <td rowspan="@ParentsCount">
+                        @Html.DisplayFor(modelItem => item.PersonalNumber)
+                    </td>
+                    <td rowspan="@ParentsCount">
+                        @Html.DisplayFor(modelItem => item.School.Name)
+                    </td>
+                    <td></td>
+                    <td rowspan="@ParentsCount">
+                        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+            </tr>
+            @foreach (var parent in item.Parents) {
+                
+                <tr>
+                    <td>
+                        <a href="/Parents/Details?id=@Html.DisplayFor(modelItem => parent.ID)">
+                            @Html.DisplayFor(modelItem => parent.FirstName) @Html.DisplayFor(modelItem => parent.LastName)
+                        </a>
+                    </td>
+                </tr>
+            }
 }
     </tbody>
 </table>
